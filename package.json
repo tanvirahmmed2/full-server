@@ -1,0 +1,29 @@
+{
+  "name": "full-server",
+  "version": "1.0.0",
+  "description": "��#\u0000 \u0000f\u0000u\u0000l\u0000l\u0000-\u0000s\u0000e\u0000r\u0000v\u0000e\u0000r\u0000\r\u0000 \u0000",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tanvirahmmed2/full-server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/tanvirahmmed2/full-server/issues"
+  },
+  "homepage": "https://github.com/tanvirahmmed2/full-server#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.18.0",
+    "multer": "^2.0.2",
+    "nodemon": "^3.1.10"
+  }
+}
