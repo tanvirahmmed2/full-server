@@ -6,6 +6,7 @@ const jwt= require('jsonwebtoken')
 const multer= require('multer')
 const path = require('path')
 const cors= require('cors')
+const { type } = require("os")
 
 const PORT= process.env.PORT || 5000
 const MONGO_URL= process.env.MONGO_URL
@@ -65,9 +66,15 @@ app.post('/upload', upload.single('product'), (req,res)=>{
 
 const Product= mongoose.model("Product", {
     id:{
+        type: Number,
+        required: true,
+         
+    },
+    name:{
         type: String,
-        
-    }
+        required: true,
+    },
+    
 })
 
 
