@@ -33,6 +33,11 @@ app.get('/', (req,res)=>{
 
 
 
-app.listen(PORT, ()=>{
-    console.log(`Server is running at https://localhost:${PORT}`)
+app.listen(PORT, (error)=>{
+    if(!error){
+        console.log(`Server is running at https://localhost:${PORT}`)
+    }
+    else{
+        console.log("Error: " + error)
+    }
 })
