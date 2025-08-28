@@ -103,6 +103,30 @@ const Product= mongoose.model("Product", {
 
 
 
+app.post('/addproduct', async(req,res)=>{
+    
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 app.listen(PORT, (error)=>{
