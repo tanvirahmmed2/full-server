@@ -104,7 +104,21 @@ const Product= mongoose.model("Product", {
 
 
 app.post('/addproduct', async(req,res)=>{
-    
+    const product= new Product({
+        id: req.body.id,
+        name: req.body.name,
+        image: req.body.image,
+        category: req.body.category,
+        new_price: req.body.new_price,
+        old_price: req.body.old_price,
+        
+    })
+    await product.save()
+
+    res.status(200).send({
+        message: "successful",
+        payload:{ product}
+    })
 })
 
 
