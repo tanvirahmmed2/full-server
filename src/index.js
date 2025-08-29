@@ -124,6 +124,23 @@ app.post("/addproduct", upload.single("image"), async (req, res) => {
 });
 
 
+//delete product
+app.post('/removeproduct', async(req,res)=>{
+  try {
+    await Product.findOneAndDelete({id:req.body.id})
+    
+
+
+    res.status(200).send({
+      message: `Product removed`,
+      id: req.body.id
+    })
+
+  } catch (err) {
+    res.status(500).send({ error: err.message });
+  }
+})
+
 
 
 
