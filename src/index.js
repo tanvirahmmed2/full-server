@@ -49,7 +49,9 @@ app.use("/images", express.static("upload/images"));
 app.post("/upload", upload.single("product"), (req, res) => {
   res.status(200).send({
     message: "successfully uploaded",
-    image_url: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
+    image_url: `${req.protocol}://${req.get("host")}/images/${
+      req.file.filename
+    }`,
   });
 });
 
@@ -92,14 +94,14 @@ const Product = mongoose.model("Product", {
 // Add product with image
 app.post("/addproduct", upload.single("image"), async (req, res) => {
   try {
-    let products= await Product.find({})
-    let id
-    if(products.length>0){
-      let last_product_array=products.slice(-1)
-      let last_product= last_product_array[0]
-      id = last_product.id + 1
-    }else{
-      id=1
+    let products = await Product.find({});
+    let id;
+    if (products.length > 0) {
+      let last_product_array = products.slice(-1);
+      let last_product = last_product_array[0];
+      id = last_product.id + 1;
+    } else {
+      id = 1;
     }
     const product = new Product({
       id: id,
@@ -123,27 +125,27 @@ app.post("/addproduct", upload.single("image"), async (req, res) => {
   }
 });
 
-
 //delete product
-app.post('/removeproduct', async(req,res)=>{
+app.post("/removeproduct", async (req, res) => {
   try {
-    await Product.findOneAndDelete({id:req.body.id})
-    
+    const deletedProduct = await Product.findOneAndDelete({
+      id: Number(req.body.id),
+    });
 
-
+    if (!deletedProduct) {
+      return res.status(404).send({
+        message: "Product not found",
+        id: req.body.id,
+      });
+    }
     res.status(200).send({
       message: `Product removed`,
-      id: req.body.id
-    })
-
+      id: req.body.id,
+    });
   } catch (err) {
     res.status(500).send({ error: err.message });
   }
-})
-
-
-
-
+});
 
 // Get all products
 app.get("/products", async (req, res) => {
@@ -154,17 +156,6 @@ app.get("/products", async (req, res) => {
     res.status(500).send({ error: err.message });
   }
 });
-
-
-
-
-
-
-
-
-
-
-
 
 // Start server
 app.listen(PORT, (error) => {
