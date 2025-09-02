@@ -157,6 +157,24 @@ app.get("/products", async (req, res) => {
   }
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Start server
 app.listen(PORT, (error) => {
   if (!error) {
