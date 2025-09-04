@@ -169,7 +169,7 @@ app.get("/products", async (req, res) => {
 //schema creating for usermodel
 
 
-const Usres= mongoose.model('Users', {
+const Users= mongoose.model('Users', {
   name: {
     type: String,
   },
@@ -193,7 +193,10 @@ const Usres= mongoose.model('Users', {
 //creating user
 
 app.post('/signup', async(req,res)=>{
-  
+  let check= await Users.findOne({email: req.body.email})
+  if(check){
+    return
+  }
 })
 
 
