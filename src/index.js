@@ -190,7 +190,11 @@ const Usres= mongoose.model('Users', {
 })
 
 
+//creating user
 
+app.post('/signup', async(req,res)=>{
+  
+})
 
 
 
