@@ -45,13 +45,21 @@ const upload = multer({ storage: storage });
 // Static folder for images
 app.use("/images", express.static("upload/images"));
 
-// Test route for single file upload
-app.post("/upload", upload.single("product"), (req, res) => {
+// ===============================
+// ROUTES
+// ===============================
+
+// Upload only (returns image url)
+app.post("/upload", upload.single("image"), (req, res) => {
+  if (!req.file) {
+    return res
+      .status(400)
+      .send({ success: false, message: "No file uploaded" });
+  }
   res.status(200).send({
+    success: true,
     message: "successfully uploaded",
-    image_url: `${req.protocol}://${req.get("host")}/images/${
-      req.file.filename
-    }`,
+    image_url: `${req.protocol}://${req.get("host")}/images/${req.file.filename}`,
   });
 });
 
@@ -91,41 +99,34 @@ const Product = mongoose.model("Product", {
   },
 });
 
-// Add product with image
-app.post("/addproduct", upload.single("image"), async (req, res) => {
+// Add product with image url
+app.post("/addproduct", async (req, res) => {
   try {
     let products = await Product.find({});
-    let id;
-    if (products.length > 0) {
-      let last_product_array = products.slice(-1);
-      let last_product = last_product_array[0];
-      id = last_product.id + 1;
-    } else {
-      id = 1;
-    }
+    let id = products.length > 0 ? products[products.length - 1].id + 1 : 1;
+
     const product = new Product({
       id: id,
       name: req.body.name,
-      image: req.file
-        ? `${req.protocol}://${req.get("host")}/images/${req.file.filename}`
-        : "",
+      image: req.body.image,
       category: req.body.category,
-      new_price: req.body.new_price,
-      old_price: req.body.old_price,
+      new_price: Number(req.body.new_price),
+      old_price: Number(req.body.old_price),
     });
 
     await product.save();
 
     res.status(200).send({
+      success: true,
       message: "Product added successfully ✅",
       payload: product,
     });
   } catch (err) {
-    res.status(500).send({ error: err.message });
+    res.status(500).send({ success: false, error: err.message });
   }
 });
 
-//delete product
+// Delete product
 app.post("/removeproduct", async (req, res) => {
   try {
     const deletedProduct = await Product.findOneAndDelete({
@@ -134,16 +135,18 @@ app.post("/removeproduct", async (req, res) => {
 
     if (!deletedProduct) {
       return res.status(404).send({
+        success: false,
         message: "Product not found",
         id: req.body.id,
       });
     }
     res.status(200).send({
+      success: true,
       message: `Product removed`,
       id: req.body.id,
     });
   } catch (err) {
-    res.status(500).send({ error: err.message });
+    res.status(500).send({ success: false, error: err.message });
   }
 });
 
@@ -151,29 +154,11 @@ app.post("/removeproduct", async (req, res) => {
 app.get("/products", async (req, res) => {
   try {
     const products = await Product.find();
-    res.status(200).send(products);
+    res.status(200).send({ success: true, products });
   } catch (err) {
-    res.status(500).send({ error: err.message });
+    res.status(500).send({ success: false, error: err.message });
   }
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 // Start server
 app.listen(PORT, (error) => {
