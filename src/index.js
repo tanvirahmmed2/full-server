@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const multer = require("multer");
 const path = require("path");
 const cors = require("cors");
+const { type } = require("os");
+const { stringify } = require("querystring");
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URL = process.env.MONGO_URL;
@@ -159,6 +161,53 @@ app.get("/products", async (req, res) => {
     res.status(500).send({ success: false, error: err.message });
   }
 });
+
+
+
+
+
+//schema creating for usermodel
+
+
+const Usres= mongoose.model('Users', {
+  name: {
+    type: String,
+  },
+  email:{
+    type: String,
+    unique: true,
+  },
+  password:{
+    type: String
+  },
+  cartData: {
+    type: Object
+  },
+  date:{
+    type: Date,
+    default: Date.now
+  }
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // Start server
 app.listen(PORT, (error) => {
