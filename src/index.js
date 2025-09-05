@@ -204,6 +204,17 @@ app.post('/signup', async(req,res)=>{
   for(let i=0; i<300; i++){
     cart[i]=0
   }
+  const user= new Users({
+    name: req.body.username,
+    email: req.body.email,
+    password: req.body.password,
+    cartData: cart,
+
+  })
+
+  await user.save()
+
+  
 })
 
 
