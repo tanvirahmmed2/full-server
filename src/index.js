@@ -221,8 +221,11 @@ app.post('/signup', async (req, res) => {
       id: user.id
     }
   }
-  const token = jwt.sign()
-
+  const token = jwt.sign(data, 'sercret_ecom')
+  res.json({
+    success: true,
+    token
+  })
 })
 
 
