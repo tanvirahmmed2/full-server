@@ -200,6 +200,10 @@ app.post('/signup', async(req,res)=>{
       errors: "user already exists"
     })
   }
+  let cart={};
+  for(let i=0; i<300; i++){
+    cart[i]=0
+  }
 })
 
 
