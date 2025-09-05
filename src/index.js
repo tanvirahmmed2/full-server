@@ -195,7 +195,10 @@ const Users= mongoose.model('Users', {
 app.post('/signup', async(req,res)=>{
   let check= await Users.findOne({email: req.body.email})
   if(check){
-    return
+    return res.status(200).json({
+      success: false,
+      errors: "user already exists"
+    })
   }
 })
 
