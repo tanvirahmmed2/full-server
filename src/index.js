@@ -7,7 +7,7 @@ const path = require("path");
 const cors = require("cors");
 const { type } = require("os");
 const { stringify } = require("querystring");
-const jwt= require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 
 const PORT = process.env.PORT || 5000;
 const MONGO_URL = process.env.MONGO_URL;
@@ -216,8 +216,8 @@ app.post('/signup', async (req, res) => {
   await user.save()
 
 
-  const data={
-    user:{
+  const data = {
+    user: {
       id: user.id
     }
   }
@@ -232,7 +232,19 @@ app.post('/signup', async (req, res) => {
 
 
 
+// userlogin endpoint
 
+app.post('/signin', async (req, res) => {
+  let user = await Users.findOne({ email: req.body.email })
+  if (user) {
+    const passCompare = req.body.password === user.password
+    if(passCompare){
+      const data={
+        
+      }
+    }
+  }
+})
 
 
 
