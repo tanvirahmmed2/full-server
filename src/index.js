@@ -176,7 +176,7 @@ app.get('/newcollection', async (req,res)=>{
 })
 
 
-//  creating endpoint for women category
+//  creating endpoint for popular in women category
 
 
 app.get('/popularinwomen', async(req,res)=>{
@@ -184,6 +184,12 @@ app.get('/popularinwomen', async(req,res)=>{
   let popular_in_women= products.slice(1,7)
   console.log(`popular in women fetched`)
   res.send(popular_in_women)
+})
+
+//cart endpoint
+
+app.post('/addtocart', async(req,res)=>{
+  console.log(req.body)
 })
 
 
