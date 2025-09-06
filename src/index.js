@@ -198,7 +198,7 @@ app.post('/signup', async (req, res) => {
   if (check) {
     return res.status(200).json({
       success: false,
-      errors: "user already exists"
+      errors: "user already exists with this mail"
     })
   }
   let cart = {};
