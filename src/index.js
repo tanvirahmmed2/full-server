@@ -165,6 +165,31 @@ app.get("/products", async (req, res) => {
 
 
 
+// creating end poin for new collection
+
+
+app.get('/newcollection', async (req,res)=>{
+  let products= await Product.find({})
+  let newcollection= products.slice(1).slice(-6)
+  console.log('new collection fetched')
+  res.send(newcollection)
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 //schema creating for usermodel
