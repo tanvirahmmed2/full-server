@@ -179,11 +179,11 @@ app.get('/newcollection', async (req,res)=>{
 //  creating endpoint for popular in women category
 
 
-app.get('/popularinwomen', async(req,res)=>{
-  let products= await Product.find({category: "women"})
-  let popular_in_women= products.slice(1,7)
+app.get('/popularinmen', async(req,res)=>{
+  let products= await Product.find({category: "men"})
+  let popular_in_men= products.slice(1,4)
   console.log(`popular in women fetched`)
-  res.send(popular_in_women)
+  res.send(popular_in_men)
 })
 
 
@@ -211,23 +211,13 @@ const fetchUser= async(req,res,next)=>{
 
 //cart endpoint
 
-app.post("/addtocart", fetchUser, async (req, res) => {
-  try {
-    const { itemId } = req.body;
-    let userData = await Users.findById(req.user.id);
-
-    if (!userData.cartData) userData.cartData = {};
-
-    userData.cartData[itemId] = (userData.cartData[itemId] || 0) + 1;
-
-    await userData.save();
-
-    res.json({ success: true, cartData: userData.cartData });
-  } catch (error) {
-    res.status(500).json({ success: false, error: error.message });
-  }
+app.put("/addtocart", fetchUser, async (req, res) => {
+  
+  let userData = await Users.findOne({_id: req.user._id})
+  userData.cartData[req.body.itemId] +=1
+  await Users.findOneAndUpdate({_id: req.user._id}, {cartData: userData.cartData})
+  res.send('added')
 });
-
 
 
 
@@ -257,7 +247,8 @@ const Users = mongoose.model('Users', {
     type: String
   },
   cartData: {
-    type: Object
+    type: Object,
+    default:{}
   },
   date: {
     type: Date,
