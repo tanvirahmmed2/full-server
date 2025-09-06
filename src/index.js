@@ -240,8 +240,15 @@ app.post('/signin', async (req, res) => {
     const passCompare = req.body.password === user.password
     if(passCompare){
       const data={
-        
+        user:{
+          id:user.id
+        }
       }
+      const token = jwt.sign(data, 'secret_ecom')
+      res.json({
+        success: true,
+        token
+      })
     }
   }
 })
