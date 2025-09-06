@@ -238,10 +238,10 @@ app.post('/signin', async (req, res) => {
   let user = await Users.findOne({ email: req.body.email })
   if (user) {
     const passCompare = req.body.password === user.password
-    if(passCompare){
-      const data={
-        user:{
-          id:user.id
+    if (passCompare) {
+      const data = {
+        user: {
+          id: user.id
         }
       }
       const token = jwt.sign(data, 'secret_ecom')
@@ -249,7 +249,20 @@ app.post('/signin', async (req, res) => {
         success: true,
         token
       })
+
     }
+    else {
+      res.json({
+        success: false,
+        error: "wrong password"
+      })
+    }
+  }
+  else {
+    res.json({
+      success: false,
+      error: "wrong email id"
+    })
   }
 })
 
