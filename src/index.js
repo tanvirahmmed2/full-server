@@ -182,7 +182,7 @@ app.get('/newcollection', async (req,res)=>{
 app.get('/popularinmen', async(req,res)=>{
   let products= await Product.find({category: "men"})
   let popular_in_men= products.slice(1,4)
-  console.log(`popular in women fetched`)
+  console.log(`popular in men fetched`)
   res.send(popular_in_men)
 })
 
